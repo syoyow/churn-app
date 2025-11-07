@@ -1,0 +1,39 @@
+Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)] on win32
+Enter "help" below or click "Help" above for more information.
+>>> import streamlit as st
+... import joblib
+... import numpy as np
+... import pandas as pd
+... 
+... # === LOAD MODEL ===
+... model = joblib.load('model.pkl')
+... 
+... st.set_page_config(page_title="Prediksi Churn")
+... st.title(" Prediksi Pelanggan Churn")
+... st.markdown("Masukkan data pelanggan untuk mengetahui apakah pelanggan akan **churn** atau tidak.")
+... 
+... # === INPUT DATA ===
+... usia = st.number_input(" Usia Pelanggan", min_value=18, max_value=100, step=1)
+... lama_langganan = st.number_input(" Lama Langganan (bulan)", min_value=1, max_value=120, step=1)
+... jumlah_pengaduan = st.number_input("Jumlah Pengaduan", min_value=0, max_value=50, step=1)
+... 
+... # === PREDIKSI ===
+... if st.button("Prediksi"):
+...     # Buat DataFrame dengan nama kolom yang sama seperti saat training
+...     input_data = pd.DataFrame({
+...         'usia': [usia],
+...         'lama_langganan': [lama_langganan],
+...         'jumlah_pengaduan': [jumlah_pengaduan]
+...     })
+...     
+...     prediksi = model.predict(input_data)[0]
+...     probas = model.predict_proba(input_data)[0][1] if hasattr(model, "predict_proba") else None
+... 
+...     st.subheader("Hasil Prediksi:")
+...     if prediksi == 1:
+...         st.error("Pelanggan kemungkinan akan **CHURN**.")
+...     else:
+        st.success("✅ Pelanggan kemungkinan **TIDAK CHURN**.")
+    
+    if probas is not None:
+        st.write(f"Probabilitas Churn: **{probas:.2%}**")
