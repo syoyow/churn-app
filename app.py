@@ -11,9 +11,19 @@ st.title(" Prediksi Pelanggan Churn")
 st.markdown("Masukkan data pelanggan untuk mengetahui apakah pelanggan akan **churn** atau tidak.")
 
 # === INPUT DATA ===
-usia = st.number_input(" Usia Pelanggan", min_value=18, max_value=100, step=1)
-lama_langganan = st.number_input(" Lama Langganan (bulan)", min_value=1, max_value=120, step=1)
-jumlah_pengaduan = st.number_input("Jumlah Pengaduan", min_value=0, max_value=50, step=1)
+# usia = st.number_input(" Usia Pelanggan", min_value=18, max_value=100, step=1)
+# lama_langganan = st.number_input(" Lama Langganan (bulan)", min_value=1, max_value=120, step=1)
+# jumlah_pengaduan = st.number_input("Jumlah Pengaduan", min_value=0, max_value=50, step=1)
+input_data = pd.DataFrame([{
+    'usia': usia,
+    'lama_langganan_bulan': lama_langganan_bulan,
+    'jumlah_pengaduan': jumlah_pengaduan,
+    'paket_internet_Premium': paket_internet_Premium,
+    'paket_internet_Standard': paket_internet_Standard,
+    'metode_pembayaran_Transfer': metode_pembayaran_Transfer,
+    'metode_pembayaran_e-Wallet': metode_pembayaran_eWallet
+}])
+
 
 # === PREDIKSI ===
 if st.button("Prediksi"):
@@ -35,4 +45,5 @@ if st.button("Prediksi"):
     
     if probas is not None:
         st.write(f"Probabilitas Churn: **{probas:.2%}**")
+
 
