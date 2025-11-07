@@ -43,11 +43,11 @@ input_data = pd.DataFrame([{
 # === PREDIKSI ===
 if st.button("Prediksi"):
     # Buat DataFrame dengan nama kolom yang sama seperti saat training
-    input_data = pd.DataFrame({
-        'usia': [usia],
-        'lama_langganan': [lama_langganan],
-        'jumlah_pengaduan': [jumlah_pengaduan]
-    })
+    #input_data = pd.DataFrame({
+    #    'usia': [usia],
+    #    'lama_langganan_bulan': [lama_langganan_bulan],
+    #    'jumlah_pengaduan': [jumlah_pengaduan]
+    #})
     
     prediksi = model.predict(input_data)[0]
     probas = model.predict_proba(input_data)[0][1] if hasattr(model, "predict_proba") else None
@@ -60,6 +60,7 @@ if st.button("Prediksi"):
     
     if probas is not None:
         st.write(f"Probabilitas Churn: **{probas:.2%}**")
+
 
 
 
