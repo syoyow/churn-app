@@ -14,6 +14,22 @@ st.markdown("Masukkan data pelanggan untuk mengetahui apakah pelanggan akan **ch
 # usia = st.number_input(" Usia Pelanggan", min_value=18, max_value=100, step=1)
 # lama_langganan = st.number_input(" Lama Langganan (bulan)", min_value=1, max_value=120, step=1)
 # jumlah_pengaduan = st.number_input("Jumlah Pengaduan", min_value=0, max_value=50, step=1)
+usia = st.number_input("Usia Pelanggan", min_value=18, max_value=100, step=1)
+lama_langganan_bulan = st.number_input("Lama Langganan (bulan)", min_value=1, max_value=120, step=1)
+jumlah_pengaduan = st.number_input("Jumlah Pengaduan", min_value=0, max_value=50, step=1)
+
+paket_internet = st.selectbox("Paket Internet", ["Basic", "Standard", "Premium"])
+metode_pembayaran = st.selectbox("Metode Pembayaran", ["Kartu Kredit", "Transfer", "e-Wallet"])
+
+# === ENCODING MANUAL SESUAI FITUR MODEL ===
+paket_internet_Premium = 1 if paket_internet == "Premium" else 0
+paket_internet_Standard = 1 if paket_internet == "Standard" else 0
+
+metode_pembayaran_Transfer = 1 if metode_pembayaran == "Transfer" else 0
+metode_pembayaran_eWallet = 1 if metode_pembayaran == "e-Wallet" else 0
+
+# === Buat Dataframe dengan kolom sesuai model ===
+
 input_data = pd.DataFrame([{
     'usia': usia,
     'lama_langganan_bulan': lama_langganan_bulan,
@@ -23,7 +39,6 @@ input_data = pd.DataFrame([{
     'metode_pembayaran_Transfer': metode_pembayaran_Transfer,
     'metode_pembayaran_e-Wallet': metode_pembayaran_eWallet
 }])
-
 
 # === PREDIKSI ===
 if st.button("Prediksi"):
@@ -45,5 +60,6 @@ if st.button("Prediksi"):
     
     if probas is not None:
         st.write(f"Probabilitas Churn: **{probas:.2%}**")
+
 
 
